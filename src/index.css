@@ -1,0 +1,124 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --glow: #ffd27a;
+  --ink: #fff7f0;
+  color-scheme: dark;
+}
+[data-phase='evening'] {
+  --glow: #9fe3ff;
+  --ink: #f2efff;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: #0a0712;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+input,
+textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* ---------- living background ---------- */
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  transition: opacity 2.4s ease;
+}
+.blob {
+  position: absolute;
+  width: 140vmax;
+  height: 140vmax;
+  border-radius: 50%;
+  will-change: transform;
+  animation: drift 28s ease-in-out infinite alternate;
+}
+.blob:nth-child(2) {
+  animation-duration: 36s;
+  animation-delay: -12s;
+}
+.blob:nth-child(3) {
+  animation-duration: 44s;
+  animation-delay: -20s;
+}
+@keyframes drift {
+  0% {
+    transform: translate3d(-8%, -6%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, 4%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(-4%, 8%, 0) scale(0.94);
+  }
+}
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- surfaces & text ---------- */
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
+.quote {
+  color: var(--glow);
+  text-shadow:
+    0 0 18px color-mix(in srgb, var(--glow) 70%, transparent),
+    0 0 2px color-mix(in srgb, var(--glow) 50%, transparent);
+}
+.safe-top {
+  padding-top: max(env(safe-area-inset-top), 14px);
+}
+.safe-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom), 18px);
+}
+.field {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 12px 14px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px; /* stops iOS zoom */
+  outline: none;
+  resize: none;
+}
+.field:focus {
+  border-color: color-mix(in srgb, var(--glow) 60%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--glow) 15%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob {
+    animation: none;
+  }
+}
